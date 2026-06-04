@@ -2,7 +2,8 @@ import axios from "axios";
 
 
 export const API_ROUTES = {
-  profile: 'profile'
+  profile: 'profile',
+  categories: 'categories'
 };
 
 
