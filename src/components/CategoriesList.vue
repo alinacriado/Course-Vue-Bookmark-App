@@ -2,6 +2,8 @@
 import { useCategoriesStore } from '@/stores/categories.store';
 import { onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
+import ButtonIcon from './ButtonIcon.vue';
+import IconPlus from '@/icons/IconPlus.vue';
 
 const categoriesStore = useCategoriesStore();
 
@@ -19,7 +21,11 @@ onMounted(() => {
     >
       <RouterLink :to="`/${category.alias}`">{{ category.name }}</RouterLink>
     </li>
-    <RouterLink to="/new">Add</RouterLink>
+    <li>
+      <ButtonIcon @click="categoriesStore.createCategory">
+        <IconPlus />
+      </ButtonIcon>
+    </li>
   </ul>
 </template>
 
