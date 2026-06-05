@@ -19,7 +19,7 @@ onMounted(() => {
       :key="category.id"
       class="categories__item"
     >
-      <RouterLink :to="`/${category.alias}`">{{ category.name }}</RouterLink>
+      <RouterLink :to="`/main/${category.alias}`">{{ category.name }}</RouterLink>
     </li>
     <li>
       <ButtonIcon @click="categoriesStore.createCategory">
