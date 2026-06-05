@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useCategoriesStore } from '@/stores/categories.store';
 import { onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const categoriesStore = useCategoriesStore();
 
@@ -16,8 +17,9 @@ onMounted(() => {
       :key="category.id"
       class="categories__item"
     >
-      <a :href="`/${category.alias}`">{{ category.name }}</a>
+      <RouterLink :to="`/${category.alias}`">{{ category.name }}</RouterLink>
     </li>
+    <RouterLink to="/new">Add</RouterLink>
   </ul>
 </template>
 
