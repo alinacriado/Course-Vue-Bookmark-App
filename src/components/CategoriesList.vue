@@ -19,7 +19,12 @@ onMounted(() => {
       :key="category.id"
       class="categories__item"
     >
-      <RouterLink :to="`/main/${category.alias}`">{{ category.name }}</RouterLink>
+      <RouterLink
+        active-class="active-link"
+        :to="`/main/${category.alias}`"
+        class="categories__link"
+        >{{ category.name }}</RouterLink
+      >
     </li>
     <li>
       <ButtonIcon @click="categoriesStore.createCategory">
@@ -36,7 +41,7 @@ onMounted(() => {
   gap: 34px;
 }
 
-.categories__item a {
+.categories__link {
   font-size: 14px;
   line-height: 110%;
   letter-spacing: 0.3px;
@@ -44,7 +49,12 @@ onMounted(() => {
   transition: all 0.5s;
 }
 
-.categories__item a:hover {
+.categories__link:not(.active-link):hover {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.active-link {
   font-size: 24px;
   font-weight: 700;
 }
