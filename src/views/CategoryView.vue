@@ -2,13 +2,18 @@
 import type { Category } from '@/interfaces/category.interface';
 import { useBookmarksStore } from '@/stores/bookmarks.store';
 import { useCategoriesStore } from '@/stores/categories.store';
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const categoriesStore = useCategoriesStore();
 const bookmarksStore = useBookmarksStore();
 const category = ref<Category>();
+
+onMounted(() => {
+  category.value = categoriesStore.getCategoryByAlias(route.params.alias);
+  bookmarksStore.fetchBookmarksByCategoryId(category.value?.id);
+});
 
 watch(
   () => ({
