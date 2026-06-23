@@ -4,7 +4,10 @@ import axios from "axios";
 export const API_ROUTES = {
   profile: 'profile',
   categories: 'categories',
-  bookmarks: (id: number) => `categories/${id}/bookmarks`
+  bookmarks: (id: number) => `categories/${id}/bookmarks`,
+  auth: {
+    login: 'auth/login'
+  }
 };
 
 
