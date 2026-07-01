@@ -39,8 +39,8 @@ function logout() {
         <IconPlus />
       </ButtonIcon>
     </li>
-    <li class="categories__item">
-      <a href="#" @click="logout">Выход</a>
+    <li>
+      <a href="#" @click="logout" class="categories__link">Выход</a>
     </li>
   </ul>
 </template>
