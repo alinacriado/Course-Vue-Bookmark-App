@@ -1,4 +1,4 @@
-import { API_ROUTES, client } from "@/api";
+import { API_ROUTES, http } from "@/api";
 import type { LoginResponse } from "@/interfaces/auth.interface";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
@@ -26,11 +26,11 @@ export const useAuthStore = defineStore('auth', () => {
   const getToken = computed(() => token.value)
 
   async function login(email: string, password: string) {
-    const { data } = await client().post<LoginResponse>(API_ROUTES.auth.login, {
+    const { data } = await http.post<LoginResponse>(API_ROUTES.auth.login, {
       email,
       password
     });
-    
+
     setToken(data.token)
   }
   return { getToken, login, setToken, clearToken };

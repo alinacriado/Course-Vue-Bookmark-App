@@ -25,6 +25,10 @@ import ProfileAvatar from '@/components/ProfileAvatar.vue';
 }
 
 .nav {
-  width: 240px;
+  min-width: 240px;
+}
+
+main {
+  width: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 
-import { API_ROUTES, client } from "@/api";
+import { API_ROUTES, http } from "@/api";
 import type { Category } from "@/interfaces/category.interface";
 import { defineStore } from "pinia";
 import { ref } from "vue";
@@ -10,12 +10,12 @@ export const useCategoriesStore = defineStore('categories', () => {
   const categoriesList = ref<Category[]>([]);
 
   async function fetchAllCategories() {
-    const { data } = await client().get<Category[]>(API_ROUTES.categories);
+    const { data } = await http.get<Category[]>(API_ROUTES.categories);
     categoriesList.value = data;
   }
 
   async function createCategory() {
-    const { data } = await client().post<Category>(API_ROUTES.categories, {
+    const { data } = await http.post<Category>(API_ROUTES.categories, {
       name: 'Новая категория',
       alias: uuidv4()
     });
@@ -30,5 +30,26 @@ export const useCategoriesStore = defineStore('categories', () => {
     return;
   }
 
-  return {categoriesList , fetchAllCategories, createCategory, getCategoryByAlias}
+  async function updateCategoryById(categoryId: number | undefined, categoryName: string | undefined) {
+    if (typeof categoryId === 'number') {
+      const currentCategory = categoriesList.value.find(category => category.id === categoryId);
+  
+      if (!currentCategory) {
+        return;
+      }
+  
+      if (typeof categoryName === 'string') {
+        const { data } = await http.put<Category>(`${API_ROUTES.categories}/${categoryId}`, {
+          name: categoryName,
+          alias: currentCategory.alias
+        });
+
+        Object.assign(currentCategory, data);
+      }
+    }
+
+    return;
+  }
+
+  return {categoriesList , fetchAllCategories, createCategory, getCategoryByAlias, updateCategoryById}
 })

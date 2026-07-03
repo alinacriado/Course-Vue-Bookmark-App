@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CategoryHeader from '@/components/CategoryHeader.vue';
 import type { Category } from '@/interfaces/category.interface';
 import { useBookmarksStore } from '@/stores/bookmarks.store';
 import { useCategoriesStore } from '@/stores/categories.store';
@@ -29,7 +30,7 @@ watch(
 
 <template>
   <div class="category-view__wrapper">
-    <div class="category-view__header">{{ category?.name }}</div>
+    <CategoryHeader v-if="category" :category="category" />
     <ul class="category-view__list">
       <li
         v-for="bookmark in bookmarksStore.bookmarksList"
