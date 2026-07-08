@@ -18,7 +18,7 @@ import ProfileAvatar from '@/components/ProfileAvatar.vue';
 <style scoped>
 .app {
   display: flex;
-  gap: 200px;
+  gap: 100px;
   max-width: 1460px;
   padding: 140px 100px 0;
   margin: 0 auto;

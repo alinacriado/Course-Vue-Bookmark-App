@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import IconTrash from '@/icons/IconTrash.vue';
-import { ref } from 'vue';
+import { ref, type Directive } from 'vue';
 import ButtonIcon from './ButtonIcon.vue';
 import IconEdit from '@/icons/IconEdit.vue';
 import IconOk from '@/icons/IconOk.vue';
 import type { Category } from '@/interfaces/category.interface.ts';
 import { useCategoriesStore } from '@/stores/categories.store.ts';
 import InputString from './InputString.vue';
+import { useRouter } from 'vue-router';
 
 const { category } = defineProps<{ category: Category }>();
 const newCategoryName = ref<string>(category.name);
 const isEditing = ref(false);
 
 const categoriesStore = useCategoriesStore();
+const router = useRouter();
 
 function editCategory() {
   isEditing.value = true;
-  // newCategoryName.value = category.name;
 }
 
 function updateCategory() {
@@ -25,18 +26,32 @@ function updateCategory() {
   isEditing.value = false;
   categoriesStore.updateCategoryById(category.id, newCategoryName.value);
 }
+
+function deleteCategory() {
+  categoriesStore.deleteCategoryById(category.id);
+  router.push({ name: 'main' });
+}
+
+const vFocus: Directive<HTMLElement> = {
+  mounted: (element) => element.focus(),
+};
 </script>
 
 <template>
   <div class="category-header">
     <div v-if="!isEditing" class="category-header__name">{{ category.name }}</div>
     <div v-else class="category-header__input">
-      <InputString v-model="newCategoryName" @keyup.enter="updateCategory" @blur="updateCategory" />
+      <InputString
+        v-model="newCategoryName"
+        v-focus
+        @keyup.enter="updateCategory"
+        @blur="updateCategory"
+      />
       <ButtonIcon @click="updateCategory"><IconOk /></ButtonIcon>
     </div>
     <div class="category-header__actions">
       <ButtonIcon v-if="!isEditing" @click="editCategory"><IconEdit /></ButtonIcon>
-      <ButtonIcon><IconTrash /></ButtonIcon>
+      <ButtonIcon @click="deleteCategory"><IconTrash /></ButtonIcon>
     </div>
   </div>
 </template>

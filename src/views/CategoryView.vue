@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import BookmarkCard from '@/components/BookmarkCard.vue';
+import BookmarkSort from '@/components/BookmarkSort.vue';
 import CategoryHeader from '@/components/CategoryHeader.vue';
 import type { Category } from '@/interfaces/category.interface';
 import { useBookmarksStore } from '@/stores/bookmarks.store';
@@ -11,9 +13,17 @@ const categoriesStore = useCategoriesStore();
 const bookmarksStore = useBookmarksStore();
 const category = ref<Category>();
 
+function sortBookmarks(sort: string) {
+  bookmarksStore.activeSort = sort;
+
+  if (category.value) {
+    bookmarksStore.fetchBookmarksByCategoryId(category.value.id, bookmarksStore.activeSort);
+  }
+}
+
 onMounted(() => {
   category.value = categoriesStore.getCategoryByAlias(route.params.alias);
-  bookmarksStore.fetchBookmarksByCategoryId(category.value?.id);
+  bookmarksStore.fetchBookmarksByCategoryId(category.value?.id, bookmarksStore.activeSort);
 });
 
 watch(
@@ -23,7 +33,7 @@ watch(
   }),
   (data) => {
     category.value = categoriesStore.getCategoryByAlias(data.alias);
-    bookmarksStore.fetchBookmarksByCategoryId(category.value?.id);
+    bookmarksStore.fetchBookmarksByCategoryId(category.value?.id, bookmarksStore.activeSort);
   },
 );
 </script>
@@ -31,14 +41,20 @@ watch(
 <template>
   <div class="category-view__wrapper">
     <CategoryHeader v-if="category" :category="category" />
-    <ul class="category-view__list">
-      <li
-        v-for="bookmark in bookmarksStore.bookmarksList"
-        :key="bookmark.id"
-        class="category-view__item"
-      >
-        {{ bookmark.title }}
+    <BookmarkSort :option="bookmarksStore.activeSort" @sort="sortBookmarks" />
+    <ul class="category-view__bookmarks-list">
+      <li v-for="bookmark in bookmarksStore.bookmarksList" :key="bookmark.id">
+        <BookmarkCard :bookmark="bookmark" />
       </li>
     </ul>
   </div>
 </template>
+
+<style scoped>
+.category-view__bookmarks-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+</style>
