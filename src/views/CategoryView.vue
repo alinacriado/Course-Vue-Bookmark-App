@@ -2,17 +2,32 @@
 import BookmarkAdd from '@/components/BookmarkAdd.vue';
 import BookmarkCard from '@/components/BookmarkCard.vue';
 import BookmarkSort from '@/components/BookmarkSort.vue';
-import CategoryHeader from '@/components/CategoryHeader.vue';
+// import CategoryHeader from '@/components/CategoryHeader.vue';
 import type { Category } from '@/interfaces/category.interface';
 import { useBookmarksStore } from '@/stores/bookmarks.store';
 import { useCategoriesStore } from '@/stores/categories.store';
-import { onMounted, ref, watch } from 'vue';
+import { defineAsyncComponent, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const categoriesStore = useCategoriesStore();
 const bookmarksStore = useBookmarksStore();
 const category = ref<Category>();
+
+const CategoryHeader = defineAsyncComponent({
+  loader: async () => {
+    await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
+    return import('@/components/CategoryHeader.vue');
+  },
+  loadingComponent: BookmarkAdd,
+  errorComponent: BookmarkAdd,
+  delay: 200,
+  timeout: 3000,
+});
 
 function sortBookmarks(sort: string) {
   bookmarksStore.activeSort = sort;
