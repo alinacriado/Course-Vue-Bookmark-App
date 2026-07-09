@@ -29,7 +29,7 @@ const emit = defineEmits<{
 .bookmark-sort {
   margin-top: 16px;
   display: flex;
-  gap: 8px;
+  gap: 15px;
 }
 
 .bookmark-sort__item {

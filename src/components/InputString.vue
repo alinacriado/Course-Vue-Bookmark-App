@@ -11,7 +11,8 @@ const data = defineModel<string>();
   font-size: 24px;
   line-height: 130%;
   color: var(--color-fg);
-  min-width: 274px;
+  width: 100%;
+  max-width: 273px;
 }
 
 .input-string:placeholder {

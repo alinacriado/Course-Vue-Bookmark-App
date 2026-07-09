@@ -29,7 +29,7 @@ function deleteBookmark() {
 <style scoped>
 .bookmark-card {
   width: 100%;
-  height: 100%;
+  height: 350px;
   border-radius: 30px;
   background: var(--color-fg);
   box-shadow: 0px 10px 10px 0px rgba(245, 245, 247, 0.1);
@@ -49,6 +49,10 @@ function deleteBookmark() {
 }
 
 .bookmark-card__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   color: var(--color-background);
   font-size: 16px;
   font-weight: 500;

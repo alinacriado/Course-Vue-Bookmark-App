@@ -20,7 +20,7 @@ import ProfileAvatar from '@/components/ProfileAvatar.vue';
   display: flex;
   gap: 100px;
   max-width: 1460px;
-  padding: 140px 100px 0;
+  padding: 140px 100px;
   margin: 0 auto;
 }
 
