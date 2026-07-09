@@ -29,7 +29,7 @@ function createBookmark() {
 <template>
   <div class="bookmark-add">
     <div v-if="isEditing" class="bookmark-add__form">
-      <InputString v-model="newUrl" placeholder="Вставьте ссылку" />
+      <InputString v-model="newUrl" placeholder="Вставьте ссылку" is-focused />
       <ButtonIcon @click="createBookmark"><IconOk /></ButtonIcon>
     </div>
     <ButtonIcon v-else :size="48" @click="toggleIsEditing"><IconPlus /></ButtonIcon>
@@ -44,6 +44,7 @@ function createBookmark() {
   align-items: center;
   border: 1px dashed var(--color-fg);
   height: 100%;
+  padding: 20px;
 }
 
 .bookmark-add__form {

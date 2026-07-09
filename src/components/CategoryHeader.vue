@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconTrash from '@/icons/IconTrash.vue';
-import { ref, type Directive } from 'vue';
+import { ref } from 'vue';
 import ButtonIcon from './ButtonIcon.vue';
 import IconEdit from '@/icons/IconEdit.vue';
 import IconOk from '@/icons/IconOk.vue';
@@ -31,10 +31,6 @@ function deleteCategory() {
   categoriesStore.deleteCategoryById(category.id);
   router.push({ name: 'main' });
 }
-
-const vFocus: Directive<HTMLElement> = {
-  mounted: (element) => element.focus(),
-};
 </script>
 
 <template>
@@ -43,7 +39,7 @@ const vFocus: Directive<HTMLElement> = {
     <div v-else class="category-header__input">
       <InputString
         v-model="newCategoryName"
-        v-focus
+        is-focused
         @keyup.enter="updateCategory"
         @blur="updateCategory"
       />
