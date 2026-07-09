@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Teleport } from 'vue';
 import ButtonText from './ButtonText.vue';
 
 const { isOpened, text } = defineProps<{
@@ -14,17 +13,19 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Teleport to="body">
-    <div v-if="isOpened" class="popup__cover">
-      <div class="popup">
-        {{ text }}
-        <div class="popup__actions">
-          <ButtonText @click="emit('ok')">Да</ButtonText>
-          <ButtonText @click="emit('cancel')">Нет</ButtonText>
+  <Transition name="fade">
+    <Teleport to="body">
+      <div v-if="isOpened" class="popup__cover">
+        <div class="popup">
+          {{ text }}
+          <div class="popup__actions">
+            <ButtonText @click="emit('ok')">Да</ButtonText>
+            <ButtonText @click="emit('cancel')">Нет</ButtonText>
+          </div>
         </div>
       </div>
-    </div></Teleport
-  >
+    </Teleport>
+  </Transition>
 </template>
 
 <style scoped>
@@ -53,4 +54,15 @@ const emit = defineEmits<{
   display: flex;
   justify-content: space-between;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
+// {name}-enter-{from, to, active} // {name}-leave-{from, to, active}
